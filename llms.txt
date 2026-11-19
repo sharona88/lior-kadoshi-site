@@ -36,7 +36,8 @@
 ## עמודי האתר
 - [דף הבית](https://reelzstudios.co.il/): סקירה מלאה של השירותים
 - [פודקאסטים ואולפן נייד](https://reelzstudios.co.il/#podcast)
-- [שירותים](https://reelzstudios.co.il/#services)
+- [שירותים](https://reelzstudios.co.il/services.html): רשימת 12 השירותים, בלי מחירים באתר
+- [סקירת שירותים בדף הבית](https://reelzstudios.co.il/#services)
 - [אולפן נייד וציוד](https://reelzstudios.co.il/#studio)
 - [תהליך העבודה](https://reelzstudios.co.il/#process)
 - [יצירת קשר](https://reelzstudios.co.il/#contact)

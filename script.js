@@ -18,13 +18,15 @@
 
   // preselect service from CTA
   var sel=document.getElementById('f-type');
-  document.querySelectorAll('[data-service]').forEach(function(b){
-    b.addEventListener('click',function(){sel.value=b.getAttribute('data-service')});
-  });
+  if(sel){
+    document.querySelectorAll('[data-service]').forEach(function(b){
+      b.addEventListener('click',function(){sel.value=b.getAttribute('data-service')});
+    });
+  }
 
   // brief form -> WhatsApp
   var form=document.getElementById('brief'),err=document.getElementById('form-err');
-  form.addEventListener('submit',function(e){
+  if(form) form.addEventListener('submit',function(e){
     e.preventDefault();
     var name=form.name.value.trim(),phone=form.phone.value.trim(),type=sel.value,msg=form.msg.value.trim();
     var bad=[];
