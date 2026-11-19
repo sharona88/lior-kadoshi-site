@@ -41,6 +41,44 @@
     window.open(url,'_blank','noopener');
   });
 
+  // services scroll spotlight
+  var svc=document.querySelector('[data-svc]');
+  if(svc){
+    var blocks=[].slice.call(svc.querySelectorAll('.svc__block'));
+    var ticks=[].slice.call(svc.querySelectorAll('.svc__rail a'));
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ticking=false,lastActive=-1;
+    function clamp(v,a,b){return v<a?a:v>b?b:v}
+    function frame(){
+      ticking=false;
+      var vh=window.innerHeight,mid=vh/2,best=-1,bestD=1e9;
+      var sr=svc.getBoundingClientRect();
+      svc.classList.toggle('rail-on',sr.top<vh*0.45&&sr.bottom>vh*0.55);
+      blocks.forEach(function(b,i){
+        var r=b.getBoundingClientRect(),c=r.top+r.height/2,off=c-mid;
+        var d=Math.abs(off)/(Math.max(r.height,vh*0.5)*0.9);
+        var t=clamp(1-d,0,1);t=t*t*(3-2*t);
+        if(Math.abs(off)<bestD){bestD=Math.abs(off);best=i}
+        if(reduce){b.style.setProperty('--a','1');return}
+        b.style.setProperty('--a',t.toFixed(3));
+        var o=clamp(off/vh,-1,1);
+        b.style.setProperty('--py',(o*-18).toFixed(1)+'px');
+        b.style.setProperty('--ta',(o*-46).toFixed(1)+'px');
+        b.style.setProperty('--tb',(o*34).toFixed(1)+'px');
+      });
+      if(best!==lastActive){
+        lastActive=best;
+        blocks.forEach(function(b,i){b.classList.toggle('is-active',i===best)});
+        ticks.forEach(function(a,i){a.classList.toggle('is-on',i===best);if(i===best)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
+      }
+    }
+    function req(){if(!ticking){ticking=true;requestAnimationFrame(frame)}}
+    window.addEventListener('scroll',req,{passive:true});
+    window.addEventListener('resize',req);
+    ticks.forEach(function(a,i){a.addEventListener('click',function(e){e.preventDefault();var b=blocks[i],r=b.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-(window.innerHeight-r.height)/2,behavior:reduce?'auto':'smooth'})})});
+    frame();
+  }
+
   // reveal on scroll
   if('IntersectionObserver' in window){
     var els=document.querySelectorAll('.head,.split > *,.card,.frame,.gear__item,.steps li,.contact__grid > *,.reel__inner > div');
