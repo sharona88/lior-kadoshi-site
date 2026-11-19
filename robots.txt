@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lior-kadoshi.onrender.com/sitemap.xml
